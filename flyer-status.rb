@@ -20,27 +20,20 @@ flyers << Flyer.new('Moe', 'moe@example.com', 1000)
 flyers << Flyer.new('Curly', 'curly@example.com', 3000, :gold)
 flyers << Flyer.new('Shemp', 'shemp@example.com', 2000)
 
-#
-# select
-#
-puts 'Frequent Flyers:'
-frequent_flyers = flyers.select { |flyer| flyer.miles_flown >= 3000 }
-puts frequent_flyers
+name_tags = flyers.map { |flyer| "#{flyer.name} (#{flyer.status.upcase})" }
+puts name_tags
 
-#
-# reject
-#
-puts 'Infrequent Flyers:'
-infrequent_flyers = flyers.reject { |flyer| flyer.miles_flown >= 3000 }
-puts infrequent_flyers
+distance_flown = flyers.map { |flyer| flyer.miles_flown * 1.6 }
+puts distance_flown
 
-#
-# any
-#
-puts flyers.any? { |flyer| flyer.status == :platinum }
+total_miles_flown = flyers.reduce(0) { |sum, flyer| sum + flyer.miles_flown }
+puts "Total miles flown: #{total_miles_flown}"
 
-#
-# detect
-#
-first_bronze_flyer = flyers.detect { |flyer| flyer.status == :bronze }
-puts first_bronze_flyer
+platinum_flyers, coach_flyers = flyers.partition { |flyer| flyer.status == :platinum }
+puts "Platinum Passengers:"
+puts platinum_flyers
+puts "Coach Passengers:"
+puts coach_flyers
+
+total_kms_flown = flyers.reduce(0) { |sum, flyer| sum + (flyer.miles_flown * 1.6) }
+puts "Total kilometers flown: #{total_kms_flown}"
